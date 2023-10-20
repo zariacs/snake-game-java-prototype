@@ -9,7 +9,7 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int SCREEN_HEIGHT = 600;
     static final int UNIT_SIZE = 25;
     static final int GAME_UNITS = (SCREEN_WIDTH*SCREEN_HEIGHT)/UNIT_SIZE;
-    static final int DELAY = 75;
+    static final int DELAY = 70;
     final int[] x = new int[GAME_UNITS];
     final int[] y = new int[GAME_UNITS];
     int bodyParts = 6;
@@ -41,12 +41,12 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     public void draw(Graphics g) {
         if(running) {
-            /* // Grid lines
+            // Grid lines
             for (int i = 0; i < SCREEN_HEIGHT / UNIT_SIZE; i++) {
                 g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
                 g.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
             }
-             */
+
             g.setColor(Color.red);
             g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
 
@@ -81,15 +81,27 @@ public class GamePanel extends JPanel implements ActionListener {
         switch(direction) {
             case 'U':
                 y[0] = y[0] - UNIT_SIZE;
+                if(y[0] < 0) {
+                    y[0] = SCREEN_HEIGHT;
+                }
                 break;
             case 'D':
                 y[0] = y[0] + UNIT_SIZE;
+                if(y[0] >= SCREEN_HEIGHT) {
+                    y[0] = 0;
+                }
                 break;
             case 'L':
                 x[0] = x[0] - UNIT_SIZE;
+                if(x[0] < 0) {
+                    x[0] = SCREEN_WIDTH;
+                }
                 break;
             case 'R':
                 x[0] = x[0] + UNIT_SIZE;
+                if(x[0] >= SCREEN_WIDTH) {
+                    x[0] = 0;
+                }
                 break;
         }
     }
@@ -116,18 +128,21 @@ public class GamePanel extends JPanel implements ActionListener {
          */
         // prevents snake from escaping the game through borders
         // causes looped re-entry
-        if(x[0] < 0) {
+        /*
+        if(x[0] <= 0) {
             x[0] = SCREEN_WIDTH;
         }
-        if(x[0] > SCREEN_WIDTH) {
+        if(x[0] >= SCREEN_WIDTH) {
             x[0] = 0;
         }
-        if(y[0] < 0) {
+        if(y[0] <= 0) {
             y[0] = SCREEN_HEIGHT;
         }
-        if(y[0] > SCREEN_HEIGHT) {
+        if(y[0] >= SCREEN_HEIGHT) {
             y[0] = 0;
         }
+
+         */
         if(!running) {
             timer.stop();
         }
