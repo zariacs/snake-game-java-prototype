@@ -10,8 +10,8 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int UNIT_SIZE = 25;
     static final int GAME_UNITS = (SCREEN_WIDTH*SCREEN_HEIGHT)/UNIT_SIZE;
     static final int DELAY = 75;
-    final int x[] = new int[GAME_UNITS];
-    final int y[] = new int[GAME_UNITS];
+    final int[] x = new int[GAME_UNITS];
+    final int[] y = new int[GAME_UNITS];
     int bodyParts = 6;
     int applesEaten;
     int appleX;
@@ -108,9 +108,25 @@ public class GamePanel extends JPanel implements ActionListener {
                 break;
             }
         }
+        /*
         // check if head touches a border
         if(x[0] < 0 || x[0] > SCREEN_WIDTH || y[0] < 0 || y[0] > SCREEN_HEIGHT) {
             running = false;
+        }
+         */
+        // prevents snake from escaping the game through borders
+        // causes looped re-entry
+        if(x[0] < 0) {
+            x[0] = SCREEN_WIDTH;
+        }
+        if(x[0] > SCREEN_WIDTH) {
+            x[0] = 0;
+        }
+        if(y[0] < 0) {
+            y[0] = SCREEN_HEIGHT;
+        }
+        if(y[0] > SCREEN_HEIGHT) {
+            y[0] = 0;
         }
         if(!running) {
             timer.stop();
